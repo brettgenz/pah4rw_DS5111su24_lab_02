@@ -5,6 +5,7 @@ Brett Genz
 Design Questions
 
 **1) (3 PTS) What tables should you build?**
+
 There are 4 types of information: courses, instructors, teaching assignments, and learning outcomes. Based on this, the database will need those 4 tables.
 
 **2) (2 PTS) For each table, what field(s) will you use for primary key?**
@@ -46,12 +47,14 @@ For the learning outcomes table, this would need to be addressed with a query of
 Yes, the multiple entries for instructors in the capstone courses are not atomic, and need to be atomized. I will handle this by splitting the cells with multiple instructors. 
 
 **6) (1 PT) Are there indexes that you should build? Explain your reasoning.**
+
 I don’t believe that any additional indexes need to be built … at least not with the way I built the tables (see ERD below). Between the two primary keys of ‘mnemonic’ and ‘instructor’, which serve as indexes by default, I think that provides ample ability to access everything in all of the tables.
 
 **7) (2 PTS) Are there constraints to enforce? Explain your answer and strategy.**
 *For example, these actions should not be allowed:*
 *- Entering learning objectives for a course not offered by the School of Data Science*
 *- Assigning an invalid instructor to a course*
+
 Primary key constraint: I have not yet checked this thoroughly, but just based on my recollection of what my different courses in the program have covered, there has been some overlap of topics. In theory, I would think that learning outcomes should be unique throughout the program; I believe it would be worth double-checking to make sure no two courses have the same learning outcome (and the work would be in checking to see if two basically identical outcomes are just phrased differently).
 
 Basic constraints: Basic checks to ensure any new entries are not null and are of the correct data type for each field (in this case nearly all text but a few other types).
@@ -60,7 +63,7 @@ Foreign key constraint: Strategy would be to query unique values for each foreig
 
 **8) (5 PTS) Draw and submit a Relational Model for your project. For an example, see Beginning Database Design Solutions page 115 Figure 5-28.**
 
- 
+/ERD.png
 
 **9) (2 PTS) Suppose you were asked if your database could also support the UVA SDS Residential MSDS Program. Explain any issues that might arise, changes to the database structure (schema), and new data that might be needed. Note you won’t actually need to support this use case for the project.**
 
