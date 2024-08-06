@@ -63,7 +63,7 @@ Foreign key constraint: Strategy would be to query unique values for each foreig
 
 **8) (5 PTS) Draw and submit a Relational Model for your project. For an example, see Beginning Database Design Solutions page 115 Figure 5-28.**
 
-/ERD.png
+(./ERD.png)
 
 **9) (2 PTS) Suppose you were asked if your database could also support the UVA SDS Residential MSDS Program. Explain any issues that might arise, changes to the database structure (schema), and new data that might be needed. Note you won’t actually need to support this use case for the project.**
 
