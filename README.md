@@ -1,5 +1,5 @@
 ### Database Design and Build - Part 1
-DS5111, Summer 2024
+DS5111, Summer 2024\
 Brett Genz
 
 Design Questions
@@ -72,3 +72,163 @@ I would need to add a field to the teaching assignments table to indicate whethe
 *Aside: Would it have been helpful to know this information before designing this database? You bet! Does this sort of thing happen in real life? Certainly. A good engineer/developer would have addressed this need during the planning stage with the right question: Any other use cases we’d want this database to support?*
 
 One case I could imagine would be, as new courses replace old courses, to compare the learning outcomes of the new course and the old course it’s replacing. The new course wouldn’t necessarily need to have identical learning outcomes as the old course; that would likely be on a case by case basis. However, I could see the comparison being valuable as instructors and program managers check to make sure the overall program still covers all the necessary learning objectives.
+
+
+### Database Design and Build - Part 2
+
+**1) (1 PT) Which courses are currently included (active) in the program? Include the course mnemonic and course name for each.**
+
+Query:
+SELECT mnemonic, name FROM "DS5111_SU24"."PAH4RW"."PAH4RW_COURSES_CSV" WHERE active = TRUE;
+
+Results:
+|MNEMONIC|NAME|
+|--------|----|
+|ds_biz_anaytics|Business Analytics for Data Scientists|
+|ds_tech_bootcamp|Technical Bootcamp|
+|ds5110|Big Data Systems|
+|ds6002|Big Data Ethics|
+|ds6011|Data Science Capstone Project Work I|
+|ds6013|Data Science Capstone Project Work II|
+|ds6030|Statistical Learning|
+|ds6040|Bayesian Machine Learning|
+|ds6050|Deep Learning|
+|sarc5400|Data Visualization|
+|stat6021|Linear Models for Data Science|
+
+
+**2) (1 PT) Which courses were included in the program, but are no longer active? Include the course mnemonic and course name for each.**
+
+Query:
+SELECT mnemonic, name FROM "DS5111_SU24"."PAH4RW"."PAH4RW_COURSES_CSV" WHERE active = FALSE;
+
+Results:
+|MNEMONIC	|NAME|
+|-----------|----|
+|ds6003	|Practice and Application of Data Science Part 2|
+|ds6012	|Big Data Ethics Part 2|
+
+**3) (1 PT) Which instructors are not current employees?**
+
+Query:
+SELECT instructor FROM "DS5111_SU24"."PAH4RW"."PAH4RW_INSTRUCTORS_CSV" WHERE employee_status = 'Not a current employee';
+
+Results:
+|INSTRUCTOR|
+|----------|
+|Jeremy Bolton|
+|Luis Felipe Rosado Murillo|
+
+**4) (1 PT) For each course (active and inactive), how many learning outcomes are there?**
+
+Query:
+SELECT mnemonic, COUNT(learning_outcome) AS learning_outcome_count 
+FROM "DS5111_SU24"."PAH4RW"."PAH4RW_LEARNING_OUTCOMES_CSV" 
+GROUP BY mnemonic;
+
+Results:
+|MNEMONIC|LEARNING_OUTCOME_COUNT|
+|--------|----------------------|
+|cs5012|9|
+|ds_biz_analytics|9|
+|ds_tech_bootcamp|15|
+|ds5001|8|
+|ds5100|34|
+|ds5110|37|
+|ds6001|10|
+|ds6002|2|
+|ds6003|3|
+|ds6011|4|
+|ds6012|2|
+|ds6013|4|
+|ds6030|19|
+|ds6040|37|
+|ds6050|24|
+|stat6021|13|
+
+
+
+**5) (2 PTS) Are there any courses with no learning outcomes? If so, provide their mnemonics and names.**
+
+No, the same query I used for question 4 shows that every course has at least 2 learning outcomes.
+
+Query:
+SELECT mnemonic, COUNT(learning_outcome) AS learning_outcome_count 
+FROM "DS5111_SU24"."PAH4RW"."PAH4RW_LEARNING_OUTCOMES_CSV" 
+GROUP BY mnemonic;
+
+Results:
+See table of results for question 4.
+
+**6) (2 PTS) Which courses include SQL as a learning outcome? Include the learning outcome descriptions, course mnemonics, and course names in your solution.**
+
+In this case I know from the raw data that there was another learning outcome in ds6001 about NoSQL, but it is not showing up in my results. I had a number of import errors when loading the data into tables, and I suspect that some of the rows did not make it into my tables in Snowflake.
+
+Query:
+SELECT lo.mnemonic, lo.learning_outcome, co.name, co.mnemonic 
+FROM "DS5111_SU24"."PAH4RW"."PAH4RW_LEARNING_OUTCOMES_CSV" lo
+LEFT JOIN "DS5111_SU24"."PAH4RW"."PAH4RW_COURSES_CSV" co ON lo.mnemonic = co.mnemonic
+WHERE lo.learning_outcome LIKE '%SQL%';
+
+Results:
+|MNEMONIC	|LEARNING_OUTCOME	|NAME|
+|-----------|-------------------|----|
+|ds5110	|Apply Spark SQL to data analysis tasks	|Big Data Systems|
+|ds6001	|"Understand how to implement databases Python: SQLite	|Practice and Application of Data Science|
+|ds6001	|Understand how to query databases with SQL 	|Practice and Application of Data Science|
+    
+
+**7) (1 PT) Who taught course ds5100 in Summer 2021?**
+
+Query:
+SELECT instructor
+FROM "DS5111_SU24"."PAH4RW"."PAH4RW_TEACHING_ASSIGNMENTS_CSV"
+WHERE term_name = 'summer2021' AND mnemonic = 'ds5100';
+
+Results:
+|INSTRUCTOR|
+|----------|
+|Nada Basit|
+
+**8) (1 PT) Which instructors taught in Fall 2021? Order their names alphabetically, making sure the names are unique.**
+
+Query:
+SELECT DISTINCT instructor
+FROM "DS5111_SU24"."PAH4RW"."PAH4RW_TEACHING_ASSIGNMENTS_CSV"
+WHERE term_name = 'fall2021'
+ORDER BY instructor;
+
+Results:
+|INSTRUCTOR|
+|----------|
+|Adam Tashman|
+|Bill Basener|
+|Eric Field|
+|Jason Williamson|
+|Jeffrey Woo|
+|Jon Kropko|
+|Judy Fox|
+|Luis Felipe Rosado Murillo|
+|Mike Porter|
+|Panagiotis Apostolellis|
+|Pete Alonzi|
+|Raf Alvarado|
+|Rich Nguyen|
+|Sree Mallikarjun|
+
+
+**9) (1 PT) How many courses did each instructor teach in each term? Order your results by term and then instructor.**
+
+Query:
+
+
+Results:
+
+
+**10a) (2 PTS) Which courses had more than one instructor for the same term? Provide the mnemonic and term for each. Note this occurs in courses with multiple sections.**
+
+
+
+**10b) (1 PT) For courses with multiple sections, provide the term, course mnemonic, and instructor name for each. Hint: You can use your result from 10a in a subquery or WITH clause.**
+
+
