@@ -78,10 +78,10 @@ One case I could imagine would be, as new courses replace old courses, to compar
 
 **1) (1 PT) Which courses are currently included (active) in the program? Include the course mnemonic and course name for each.**
 
-Query:
+Query:\
 SELECT mnemonic, name FROM "DS5111_SU24"."PAH4RW"."PAH4RW_COURSES_CSV" WHERE active = TRUE;
 
-Results:
+Results:\
 |MNEMONIC|NAME|
 |--------|----|
 |ds_biz_anaytics|Business Analytics for Data Scientists|
@@ -99,10 +99,10 @@ Results:
 
 **2) (1 PT) Which courses were included in the program, but are no longer active? Include the course mnemonic and course name for each.**
 
-Query:
+Query:\
 SELECT mnemonic, name FROM "DS5111_SU24"."PAH4RW"."PAH4RW_COURSES_CSV" WHERE active = FALSE;
 
-Results:
+Results:\
 |MNEMONIC	|NAME|
 |-----------|----|
 |ds6003	|Practice and Application of Data Science Part 2|
@@ -110,10 +110,10 @@ Results:
 
 **3) (1 PT) Which instructors are not current employees?**
 
-Query:
+Query:\
 SELECT instructor FROM "DS5111_SU24"."PAH4RW"."PAH4RW_INSTRUCTORS_CSV" WHERE employee_status = 'Not a current employee';
 
-Results:
+Results:\
 |INSTRUCTOR|
 |----------|
 |Jeremy Bolton|
@@ -121,12 +121,12 @@ Results:
 
 **4) (1 PT) For each course (active and inactive), how many learning outcomes are there?**
 
-Query:
+Query:\
 SELECT mnemonic, COUNT(learning_outcome) AS learning_outcome_count 
 FROM "DS5111_SU24"."PAH4RW"."PAH4RW_LEARNING_OUTCOMES_CSV" 
 GROUP BY mnemonic;
 
-Results:
+Results:\
 |MNEMONIC|LEARNING_OUTCOME_COUNT|
 |--------|----------------------|
 |cs5012|9|
@@ -152,25 +152,25 @@ Results:
 
 No, the same query I used for question 4 shows that every course has at least 2 learning outcomes.
 
-Query:
+Query:\
 SELECT mnemonic, COUNT(learning_outcome) AS learning_outcome_count 
 FROM "DS5111_SU24"."PAH4RW"."PAH4RW_LEARNING_OUTCOMES_CSV" 
 GROUP BY mnemonic;
 
-Results:
+Results:\
 See table of results for question 4.
 
 **6) (2 PTS) Which courses include SQL as a learning outcome? Include the learning outcome descriptions, course mnemonics, and course names in your solution.**
 
 In this case I know from the raw data that there was another learning outcome in ds6001 about NoSQL, but it is not showing up in my results. I had a number of import errors when loading the data into tables, and I suspect that some of the rows did not make it into my tables in Snowflake.
 
-Query:
+Query:\
 SELECT lo.mnemonic, lo.learning_outcome, co.name, co.mnemonic 
 FROM "DS5111_SU24"."PAH4RW"."PAH4RW_LEARNING_OUTCOMES_CSV" lo
 LEFT JOIN "DS5111_SU24"."PAH4RW"."PAH4RW_COURSES_CSV" co ON lo.mnemonic = co.mnemonic
 WHERE lo.learning_outcome LIKE '%SQL%';
 
-Results:
+Results:\
 |MNEMONIC	|LEARNING_OUTCOME	|NAME|
 |-----------|-------------------|----|
 |ds5110	|Apply Spark SQL to data analysis tasks	|Big Data Systems|
@@ -180,12 +180,12 @@ Results:
 
 **7) (1 PT) Who taught course ds5100 in Summer 2021?**
 
-Query:
+Query:\
 SELECT instructor
 FROM "DS5111_SU24"."PAH4RW"."PAH4RW_TEACHING_ASSIGNMENTS_CSV"
 WHERE term_name = 'summer2021' AND mnemonic = 'ds5100';
 
-Results:
+Results:\
 |INSTRUCTOR|
 |----------|
 |Nada Basit|
@@ -198,7 +198,7 @@ FROM "DS5111_SU24"."PAH4RW"."PAH4RW_TEACHING_ASSIGNMENTS_CSV"
 WHERE term_name = 'fall2021'
 ORDER BY instructor;
 
-Results:
+Results:\
 |INSTRUCTOR|
 |----------|
 |Adam Tashman|
@@ -219,13 +219,13 @@ Results:
 
 **9) (1 PT) How many courses did each instructor teach in each term? Order your results by term and then instructor.**
 
-Query:
+Query:\
 SELECT term_name, instructor, COUNT(instructor) AS course_count
 FROM "DS5111_SU24"."PAH4RW"."PAH4RW_TEACHING_ASSIGNMENTS_CSV"
 GROUP BY term_name, instructor
 ORDER BY term_name, instructor;
 
-Results:
+Results:\
 |TERM_NAME|INSTRUCTOR|COURSE_COUNT|
 |---------|----------|------------|
 |fall2021|Adam Tashman|1|
