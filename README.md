@@ -174,7 +174,8 @@ See table of results for question 4.
 
 In this case I know from the raw data that there was another learning outcome in ds6001 about NoSQL, but it is not showing up in my results. I had a number of import errors when loading the data into tables, and I suspect that some of the rows did not make it into my tables in Snowflake.
 
-Query:\
+*Query:*
+
 SELECT lo.mnemonic, lo.learning_outcome, co.name, co.mnemonic 
 FROM "DS5111_SU24"."PAH4RW"."PAH4RW_LEARNING_OUTCOMES_CSV" lo
 LEFT JOIN "DS5111_SU24"."PAH4RW"."PAH4RW_COURSES_CSV" co ON lo.mnemonic = co.mnemonic
