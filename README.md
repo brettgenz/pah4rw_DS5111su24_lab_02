@@ -220,14 +220,59 @@ Results:
 **9) (1 PT) How many courses did each instructor teach in each term? Order your results by term and then instructor.**
 
 Query:
-
+SELECT term_name, instructor, COUNT(instructor) AS course_count
+FROM "DS5111_SU24"."PAH4RW"."PAH4RW_TEACHING_ASSIGNMENTS_CSV"
+GROUP BY term_name, instructor
+ORDER BY term_name, instructor;
 
 Results:
+|TERM_NAME|INSTRUCTOR|COURSE_COUNT|
+|---------|----------|------------|
+|fall2021|Adam Tashman|1|
+|fall2021|Bill Basener|1|
+|fall2021|Eric Field|1|
+|fall2021|Jason Williamson|1|
+|fall2021|Jeffrey Woo|1|
+|fall2021|Jon Kropko|2|
+|fall2021|Judy Fox|1|
+|fall2021|Luis Felipe Rosado Murillo|2|
+|fall2021|Mike Porter|1|
+|fall2021|Panagiotis Apostolellis|1|
+|fall2021|Pete Alonzi|1|
+|fall2021|Raf Alvarado|1|
+|fall2021|Rich Nguyen|1|
+|fall2021|Sree Mallikarjun|1|
+|spring2021|Adam Tashman|1|
+|spring2021|Bill Basener|2|
+|spring2021|Eric Tassone|1|
+|spring2021|Jeffrey Woo|1|
+|spring2021|Jeremy Bolton|1|
+|spring2021|Judy Fox|1|
+|spring2021|Marc Ruggiano|1|
+|spring2021|Pete Alonzi|1|
+|spring2021|Raf Alvarado & Teague Henry|1|
+|spring2021|Renee Cummings|1|
+|spring2021|Sree Mallikarjun|1|
+|spring2021|Stephen Baek|1|
+|summer2021|Adam Tashman|1|
+|summer2021|Jason Williamson|1|
+|summer2021|Jeffrey Woo|1|
+|summer2021|Jeremy Bolton|1|
+|summer2021|Jon Kropko|1|
+|summer2021|Nada Basit|1|
+|summer2021|Pete Alonzi|1|
+|summer2021|Peter Gedeck|1|
+|summer2021|Raf Alvarado|1|
+|summer2021|Raf Alvarado & Teague Henry|1|
+|summer2021|Renee Cummings|2|
+|summer2021|Rich Nguyen|1|
+|summer2021|Sree Mallikarjun|1|
+|summer2021|Teague Henry|1|
 
 
 **10a) (2 PTS) Which courses had more than one instructor for the same term? Provide the mnemonic and term for each. Note this occurs in courses with multiple sections.**
 
-
+Unfortunately I'm having trouble with this and 10.b. ... I will get to them if possible before the Friday deadline.
 
 **10b) (1 PT) For courses with multiple sections, provide the term, course mnemonic, and instructor name for each. Hint: You can use your result from 10a in a subquery or WITH clause.**
 
